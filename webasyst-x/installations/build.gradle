@@ -35,4 +35,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation 'com.github.bumptech.glide:recyclerview-integration:4.11.0'
+
+    api "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh_version"
 }

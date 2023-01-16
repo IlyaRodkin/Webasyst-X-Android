@@ -3,6 +3,8 @@ package com.webasyst.x
 import android.app.Activity
 import android.app.Application
 import androidx.fragment.app.Fragment
+import api.PhotoApiClient
+import api.PhotoApiClientFactory
 import com.webasyst.api.ApiClient
 import com.webasyst.api.TokenCache
 import com.webasyst.api.blog.BlogApiClient
@@ -38,6 +40,7 @@ class WebasystXApplication : Application(), WebasystAuthStateStore.Observer, XCo
         instance = this
 
         configureWebasystAuth {
+            setDeviceId("123")
             setClientId(BuildConfig.CLIENT_ID)
             setHost(BuildConfig.WEBASYST_HOST)
             setCallbackUri(BuildConfig.APPLICATION_ID + "://oidc_callback")
@@ -52,6 +55,7 @@ class WebasystXApplication : Application(), WebasystAuthStateStore.Observer, XCo
         ShopApiClient.SCOPE,
         BlogApiClient.SCOPE,
         WebasystApiClient.SCOPE,
+        PhotoApiClient.SCOPE
     ).joinToString(
         prefix = "token:",
         separator = "."
@@ -90,6 +94,9 @@ class WebasystXApplication : Application(), WebasystAuthStateStore.Observer, XCo
             }
             addModuleFactory(WebasystApiClient::class.java) { config, waidAuthenticator ->
                 WebasystApiClientFactory(config, waidAuthenticator)
+            }
+            addModuleFactory(PhotoApiClient::class.java) { config, waidAuthenticator ->
+                PhotoApiClientFactory(config, waidAuthenticator)
             }
             clientId = "com.webasyst.x.android"
             waidAuthenticator = waidClient
